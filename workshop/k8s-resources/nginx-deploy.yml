@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: test 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+      annotations:
+        last-restart: "2024-06-19T12:00:00Z"
+    spec:
+      initContainers:
+      - name: init-sleep
+        image: busybox
+        command: ['sh', '-c', 'echo "Sleeping for 20 seconds..."; sleep 20']
+      - name: init-permissions
+        image: busybox
+        command: ["sh", "-c", "chown -R 101:101 /usr/share/nginx/html"]
+        volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
+      containers:
+      - name: nginx
+        image: nginxinc/nginx-unprivileged
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
+        - name: config-volume
+          mountPath: /etc/nginx/conf.d
+        env:
+        - name: DUMMY_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: nginx-secret
+              key: dummyKey
+      volumes:
+      - name: html-volume
+        persistentVolumeClaim:
+          claimName: nginx-pvc
+      - name: config-volume
+        configMap:
+          name: nginx-configmap
+

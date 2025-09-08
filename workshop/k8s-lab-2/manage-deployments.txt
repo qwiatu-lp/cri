@@ -1,0 +1,35 @@
+#Utworzenie deploymentu
+kubectl create deployment <nazwa-deployment> --image=<nazwa-obrazu>:<tag-obrazu>
+
+#Listowanie deploymentow w obecnym namespace
+kubectl get deployment 
+
+#Uzyskanie szczegolowego opisu yaml wskazaniego deployment
+kubectl get deployment <nazwa-deployment> -o yaml
+
+#Utworzenie deploymentu (lub dowolnego innego zasobu k8s) z pliku yaml
+kubectl create -f <nazwa-pliku>.yml
+
+#Utworzenie lub wprowadzenie zmian w zasobie
+kubectl apply -f <nazwa-pliku>.yml
+
+#Zastąpienie zasobu
+kubectl replace -f <nazwa-pliku>.yml
+
+#Usuniecie na klastrze zasobu zdefiniowanego w pliku
+kubectl delete -f <nazwa-pliku>.yml
+
+#Skalowanie deploymentu
+kubectl scale --replicas=1 deployment.apps/nginx-deployment
+
+#historia rollout
+kubectl rollout history deployment.apps/nginx-deployment
+
+#przywrocenie wersji rollout
+kubectl rollout undo --to-revision=1 deployment.apps/nginx-deployment
+
+#wyswietlenie eventów w przestrzeni nazw
+kubectl get event
+
+#zwrocenie logów poda
+kubectl logs po/nginx-deployment-ff55ccccd-vjgrg

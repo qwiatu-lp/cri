@@ -1,0 +1,7 @@
+To jest moj plik
+
+Zostanie dodany w calosci do configmapy pod kluczem odpowiadajacym jego nazwie
+
+Taki plik mozna nastepnie podmontowac do Deploymentu lub bezposrednio poda 
+
+Jako volume, wskazujac sciezke montowania

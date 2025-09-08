@@ -1,0 +1,11 @@
+
+kubectl delete --all deploy
+cd /etc/kubernetes/manifests/
+sudo mv * .. # this will stop all running pods
+sudo crictl ps
+sudo ETCDCTL_API=3 etcdct| snapshot restore /tmp/etcdbackup.db --data-dir /var/lib/etcd-backup
+sudo Is -I /var/lib/etcd-backup/
+sudo vi /etc/kubernetes/etcd.yaml # change etcd-data HostPath volume to /var/lib/etcd-backup
+sudo mv../*.yaml.
+sudo crictl ps # should show all resources
+kubectl get deploy -A

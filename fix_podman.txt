@@ -1,0 +1,21 @@
+# Determine ARCH for correct release
+export ARCH_CNI=$( [ $(uname -m) = aarch64 ] && echo arm64 || echo amd64)
+
+# Set to latest release version (https://github.com/containernetworking/plugins/releases)
+export CNI_PLUGIN_VERSION=v1.6.0
+
+# Grab the latest release version
+curl -L -o cni-plugins.tgz "https://github.com/containernetworking/plugins/releases/download/${CNI_PLUGIN_VERSION}/cni-plugins-linux-${ARCH_CNI}-${CNI_PLUGIN_VERSION}".tgz
+
+# We need a place to dump this archive to somewhere "safe"
+mkdir -p ~/src/cni
+
+# Dump the archive
+sudo tar -C ~/src/cni -xzf cni-plugins.tgz
+
+# rename the old plugin folder (location depends on your environment)
+# I am working in wsl Ubuntu
+sudo mv /usr/lib/cni /usr/lib/cni.old
+
+# replace that broken shiz with some hopefully non-broken shiz
+sudo cp -rf ~/src/cni/ /usr/lib/cni

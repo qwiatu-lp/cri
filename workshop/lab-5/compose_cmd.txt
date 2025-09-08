@@ -1,0 +1,14 @@
+#utworzenie i uruchomienie w tle
+podman-compose up -d
+
+#zatrzymanie i usuniecie
+podman-compose down
+
+#zatrzymanie
+podman-compose stop
+
+#uruchomienie
+podman-compose start
+
+#restart
+podman-compose restart

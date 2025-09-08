@@ -1,0 +1,8 @@
+#utworzenie sieci
+podman network create moja_siec
+
+#utworzenie sieci ze specyfikacja
+podman network create --subnet=192.168.100.0/24 --gateway=192.168.100.1 moja_siec2
+
+#uruchomienie kontenera z inna siecia 
+podman run --network=moja_siec mysql-container

@@ -1,0 +1,15 @@
+#Utworzenie namespace
+kubectl create namespace <nazwa-namespace>
+
+#Usuniecie namespace 
+kubectl delete namespace <nazwa-namespace>
+
+#Wyświetlenie wszystkich zasobów w namespace
+kubectl get all -n <nazwa-namespace>
+
+#Listowanie namespace
+kubectl get namespaces
+
+#Ustawienie domyslnego namespace w kubectl
+kubectl config set-context --current --namespace=<nazwa-namespace>
+

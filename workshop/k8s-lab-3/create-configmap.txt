@@ -1,0 +1,9 @@
+#Utworzenie configmapy przekazujac jej klucze i wartosci 
+kubectl create configmap my-configmap --from-literal=key1=value1 --from-literal=key2=value2
+
+#Utworzenie configmapy zawierajacej wskazany plik
+kubectl create configmap my-configmap --from-file=mykey=example-file.txt
+
+#Utworzenie configmapy zawierajacej klucze i wartosci ze wskazanego pliku
+kubectl create configmap my-configmap --from-env-file=example-file.properties
+

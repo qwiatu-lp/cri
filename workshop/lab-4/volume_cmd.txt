@@ -1,0 +1,17 @@
+#utworzenie wolumenu
+podman volume create moj_wolumen
+
+#montowanie wolumenu przy tworzeniu kontenera
+podman run -v nazwa_wolumenu:/sciezka/w/kontenerze [inne_opcje] obraz_kontenera [polecenie]
+
+#dodawanie wolumenu do instniejacego kontenera
+podman run -v moj_wolumen:/var/lib/mysql mysql-container
+
+#listowanie wolumenow
+podman volume ls
+
+#usuwanie wolumenu
+podman volume rm moj_wolumen
+
+#montowanie bind (sciezka na hoscie do sciezki kontenera)
+podman run -v /ścieżka/na/hoście:/ścieżka/w/kontenerze mysql-container

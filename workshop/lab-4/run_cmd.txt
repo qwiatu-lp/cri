@@ -1,0 +1,14 @@
+#przekazywanie zmiennych srodowiskowych
+podman run -e MOJA_ZMIENNA=wartosc debian-mysql
+
+#przekazywanie argumentow (instrukcja CMD)
+podman run debian-mysql 'daemon off;'
+
+#forwardowanie portow
+podman run -p 3306:3306 debian-mysql
+
+#ustawienie nazwy kontenera
+podman run --name moj_mysql debian-mysql
+
+#uruchomienie z ograniczonymi zasobami
+podman run --memory=512m --cpus=2 debian-mysql

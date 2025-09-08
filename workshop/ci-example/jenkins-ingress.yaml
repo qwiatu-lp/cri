@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    field.cattle.io/publicEndpoints: '[{"addresses":["10.10.12.25","10.10.12.26","10.10.12.27","10.10.12.32","10.10.12.33","10.10.12.34"],"port":80,"protocol":"HTTP","serviceName":"jenkins-tst:jenkins","ingressName":"jenkins-tst:jenkins","hostname":"jenkins-tst.apps.test0.lab.linuxpolska.pl","path":"/","allNodes":false}]'
+  creationTimestamp: "2024-09-17T03:20:09Z"
+  generation: 1
+  name: jenkins
+  namespace: jenkins-tst
+  resourceVersion: "253624575"
+  uid: 1684a784-fbe9-4cef-b630-61ef8634314e
+spec:
+  rules:
+  - host: jenkins-tst.apps.test0.lab.linuxpolska.pl
+    http:
+      paths:
+      - backend:
+          service:
+            name: jenkins
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - ip: 10.10.12.25
+    - ip: 10.10.12.26
+    - ip: 10.10.12.27
+    - ip: 10.10.12.32
+    - ip: 10.10.12.33
+    - ip: 10.10.12.34

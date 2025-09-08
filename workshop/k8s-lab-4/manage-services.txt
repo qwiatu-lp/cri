@@ -1,0 +1,17 @@
+#Praca na aplikacji w namespace webapp, w repozytorium katalog 'k8s-resources'
+
+#Utworzenie service z bezposrednio z polecenia
+kubectl expose deployment my-deployment --type=ClusterIP --name=my-service --port=80 --target-port=9376
+
+#patchowanie czyli zmiana parametrow service (lub dowolnego zasobu k8s)
+kubectl patch service my-service -p '{"spec": {"ports": [{"port": 8080, "targetPort": 9377}]}}'
+
+#edytowanie service (lub dowolnego zasobu k8s) czyli zmiana parametrow w formie yaml
+kubectl edit service my-service
+
+#Wyswietlenie szczegolow wybranego service (lub dowolnego zasobu k8s)
+kubectl describe service my-service
+
+#Port-forwarding do service (lokalny port forward)
+kubectl port-forward service/my-service 8080:80
+

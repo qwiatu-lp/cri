@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-app-from-namespace
+  namespace: ns1
+spec:
+  podSelector: {}  # Applies to all pods in this namespace
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector: {}
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ns2
+          podSelector:
+            matchLabels:
+              app: nginx1
+

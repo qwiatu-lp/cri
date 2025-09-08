@@ -1,0 +1,19 @@
+#listowanie podow
+podman pod list
+podman pod ps
+
+#wyswietlenie szczegolow poda
+podman pod inspect nazwa_lub_id_poda
+
+#zatrzymanie poda
+podman pod stop nazwa_lub_id_poda
+
+#uruchamianie utworzonego juz poda
+podman pod start nazwa_lub_id_poda
+
+#restart wszystkich kontenerow w podzie
+podman pod restart nazwa_lub_id_poda
+
+#usuniecie poda
+podman pod rm nazwa_lub_id_poda
+

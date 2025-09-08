@@ -1,0 +1,20 @@
+#listowanie kontenerow
+podman ps
+
+#listowanie obrazow 
+podman images
+
+#start kontenera
+podman start <container_name_or_id>
+
+#zatrzymanie kontenera
+podman stop <container_name_or_id>
+
+#usuniecie kontenera
+podman rm <container_name_or_id>
+
+#usuniecie obrazu
+podman rmi <image_name_or_id>
+
+#utworzenie nowego kontenera z obrazu
+podman run -d <image_name_or_id> 

@@ -1,0 +1,47 @@
+pipeline {
+    agent {
+        label 'ssh-agent'
+    }
+
+    environment {
+        REGISTRY_CREDENTIALS_ID = 'quay-io-creds'
+    }
+
+    parameters {
+        string(name: 'VERSION', defaultValue: 'latest', description: 'Tag for the Container image')
+        string(name: 'MYSQL_ROOT_PASSWORD', defaultValue: 'rootpassword', description: 'Root password for MySQL')
+        string(name: 'MYSQL_DATABASE', defaultValue: 'developer_db', description: 'Database name for MySQL')
+        string(name: 'MYSQL_USER', defaultValue: 'developer', description: 'User name for MySQL')
+        string(name: 'MYSQL_PASSWORD', defaultValue: 'developerpassword', description: 'User password for MySQL')
+    }
+
+    stages {
+        stage('Build Container Image') {
+            steps {
+                script {
+                    sh """
+                    podman build -t debian-mysql:${params.VERSION} \
+                      --build-arg MYSQL_ROOT_PASSWORD=${params.MYSQL_ROOT_PASSWORD} \
+                      --build-arg MYSQL_DATABASE=${params.MYSQL_DATABASE} \
+                      --build-arg MYSQL_USER=${params.MYSQL_USER} \
+                      --build-arg MYSQL_PASSWORD=${params.MYSQL_PASSWORD} \
+                      ci-example/.
+                    """
+                }
+            }
+        }
+        stage('Push Container Image to Quay') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: "${env.REGISTRY_CREDENTIALS_ID}", usernameVariable: 'REGISTRY_USERNAME', passwordVariable: 'REGISTRY_PASSWORD')]) {
+                        sh """
+                        echo ${REGISTRY_PASSWORD} | podman login -u ${REGISTRY_USERNAME} --password-stdin quay.io
+                        podman tag debian-mysql:${params.VERSION} quay.io/${REGISTRY_USERNAME}/debian-mysql:${params.VERSION}
+                        podman push quay.io/${REGISTRY_USERNAME}/debian-mysql:${params.VERSION}
+                        """
+                    }
+                }
+            }
+        }
+    }
+}
